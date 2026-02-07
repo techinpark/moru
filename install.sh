@@ -260,15 +260,16 @@ echo ""
 # Step 1: Fetch version
 start_spinner "Fetching latest version..."
 if [[ -z "$VERSION" ]]; then
-    VERSION="$(curl -fsSL "https://api.github.com/repos/${REPO}/releases/latest" \
-        | grep -E '"tag_name":' \
+    # Find latest CLI release (tag starts with @moru-ai/cli@)
+    VERSION="$(curl -fsSL "https://api.github.com/repos/${REPO}/releases" \
+        | grep -E '"tag_name": "@moru-ai/cli@' \
         | head -n 1 \
-        | sed -E 's/.*"([^"]+)".*/\1/')"
+        | sed -E 's/.*"@moru-ai\/cli@([^"]+)".*/\1/')"
 fi
 
-TAG="${VERSION}"
-VERSION="${VERSION##*@}"
+# VERSION is already extracted as "0.5.5" format from CLI release
 VERSION="${VERSION#v}"
+TAG="@moru-ai/cli@${VERSION}"
 spinner_success "Found version v${VERSION}"
 
 # Detect OS
