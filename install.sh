@@ -1,7 +1,7 @@
 #!/usr/bin/env bash
 set -euo pipefail
 
-REPO="moru-ai/moru"
+REPO="techinpark/moru"
 INSTALL_DIR=""
 VERSION=""
 
